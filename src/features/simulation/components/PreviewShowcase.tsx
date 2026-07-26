@@ -94,15 +94,16 @@ export function PreviewShowcase({ palette }: { palette: HexColor[] }) {
         <p className="mb-3 text-xs font-medium uppercase tracking-wide text-slate-500">
           Gráfico de barras
         </p>
-        <div className="flex h-36 items-end justify-between gap-3">
+        <div className="flex h-40 items-end justify-between gap-3">
           {barData.map((bar, i) => (
-            <div key={i} className="flex flex-1 flex-col items-center gap-2">
-              <div className="flex w-full flex-1 items-end">
-                <div
-                  className="w-full rounded-t-md transition-all"
-                  style={{ height: `${bar.value}%`, backgroundColor: bar.color }}
-                />
-              </div>
+            <div
+              key={i}
+              className="flex h-full flex-1 flex-col items-center justify-end gap-2"
+            >
+              <div
+                className="w-full rounded-t-md transition-all"
+                style={{ height: `${bar.value}%`, backgroundColor: bar.color }}
+              />
               <span className="text-xs text-slate-400">{bar.label}</span>
             </div>
           ))}

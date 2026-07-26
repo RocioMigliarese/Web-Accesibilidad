@@ -17,7 +17,7 @@
   --color-surface-50: #ffffff;
 
   /* Typography */
-  --font-sans: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
+  --font-sans: 'Atkinson Hyperlegible', 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
   --font-mono: ui-monospace, Consolas, monospace;
 
   /* Border radius */
@@ -77,6 +77,49 @@
   }
 }
 
+/* Range slider — accessible custom track/thumb */
+.a11y-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 1.15rem;
+  width: 1.15rem;
+  border-radius: 9999px;
+  background: var(--color-brand-purple);
+  border: 2px solid #ffffff;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+.a11y-range::-webkit-slider-thumb:hover {
+  transform: scale(1.12);
+}
+.a11y-range::-moz-range-thumb {
+  height: 1.15rem;
+  width: 1.15rem;
+  border-radius: 9999px;
+  background: var(--color-brand-purple);
+  border: 2px solid #ffffff;
+  cursor: pointer;
+}
+.a11y-range:focus-visible {
+  outline: 2px solid var(--color-brand-purple-light);
+  outline-offset: 3px;
+}
 
 /* Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+/* OpenDyslexic (self-hostable webfont via CDN) */
+@font-face {
+  font-family: 'OpenDyslexic';
+  src: url('https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/open-dyslexic-regular.woff2')
+    format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'OpenDyslexic';
+  src: url('https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/open-dyslexic-bold.woff2')
+    format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}

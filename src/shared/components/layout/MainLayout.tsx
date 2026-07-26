@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom'
-import { Sidebar } from './Sidebar'
+import { Navbar } from './Navbar'
 import { ReadingGuide } from './ReadingGuide'
 import { useGlobalAccessibility } from '../../hooks/useGlobalAccessibility'
 
@@ -7,19 +7,19 @@ import { useGlobalAccessibility } from '../../hooks/useGlobalAccessibility'
  * Root layout:
  * - Calls useGlobalAccessibility() once → applies font/calm-colors/spacing to <body>
  * - Renders ReadingGuide as a global DOM overlay
- * - Renders Sidebar + page content via <Outlet />
+ * - Renders top Navbar + page content via <Outlet />
  */
 export function MainLayout() {
   useGlobalAccessibility()
 
   return (
-    <div className="flex min-h-screen bg-[--a11y-bg]">
+    <div className="min-h-screen bg-[--a11y-bg]">
       {/* Global overlays */}
       <ReadingGuide />
 
-      <Sidebar />
+      <Navbar />
 
-      <main className="flex-1 ml-64 min-h-screen overflow-y-auto">
+      <main className="mx-auto min-h-screen max-w-[1600px] overflow-y-auto pt-16">
         <Outlet />
       </main>
     </div>

@@ -45,7 +45,7 @@ export const useAccessibilityStore = create<AccessibilityState>()(
         toggleTTS: () => set((state) => ({ tts: !state.tts })),
         resetAccessibility: () => set(DEFAULTS),
       }),
-      { name: 'colorability-accessibility' }
+      { name: 'toneSafe-accessibility' }
     ),
     { name: 'accessibility-store' }
   )

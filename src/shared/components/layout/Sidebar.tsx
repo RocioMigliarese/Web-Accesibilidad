@@ -39,7 +39,7 @@ export function Sidebar() {
       {/* Logo */}
       <div className="px-6 py-6 border-b border-white/10">
         <h1 className="text-xl font-bold text-white">
-          🎨 <span className="text-[#aa3bff]">Color</span>Ability
+          🎨 <span className="text-[#aa3bff]">Tone</span>Safe
         </h1>
         <p className="text-xs text-slate-500 mt-1">Accesibilidad Web</p>
       </div>
@@ -69,7 +69,7 @@ export function Sidebar() {
 
       {/* Footer */}
       <div className="px-6 py-4 border-t border-white/10">
-        <p className="text-xs text-slate-600">v1.0.0 — ColorAbility</p>
+        <p className="text-xs text-slate-600">v1.0.0 — ToneSafe</p>
       </div>
     </aside>
   )

@@ -1,0 +1,82 @@
+@import "tailwindcss";
+
+@theme {
+  /* Color palette */
+  --color-brand-purple: #aa3bff;
+  --color-brand-purple-light: #c084fc;
+  --color-brand-blue: #60a5fa;
+  --color-brand-teal: #2dd4bf;
+  --color-brand-pink: #f472b6;
+
+  /* Neutral backgrounds */
+  --color-surface-900: #0f1117;
+  --color-surface-800: #16171d;
+  --color-surface-700: #1f2028;
+  --color-surface-600: #2e303a;
+  --color-surface-100: #f4f3ec;
+  --color-surface-50: #ffffff;
+
+  /* Typography */
+  --font-sans: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: ui-monospace, Consolas, monospace;
+
+  /* Border radius */
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+}
+
+@layer base {
+  :root {
+    color-scheme: light dark;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+
+    /* Accessibility — overridden dynamically by useGlobalAccessibility hook */
+    --a11y-line-height: 1.5;
+    --a11y-letter-spacing: 0px;
+    --a11y-bg: #0f1117;
+    --a11y-text: #e2e8f0;
+  }
+
+  body {
+    @apply m-0 bg-[#0f1117] font-sans;
+    font-family: var(--font-sans);
+    line-height: var(--a11y-line-height);
+    letter-spacing: var(--a11y-letter-spacing);
+    color: var(--a11y-text);
+    background-color: var(--a11y-bg);
+    transition: background-color 0.3s ease, color 0.3s ease,
+      line-height 0.2s ease, letter-spacing 0.2s ease;
+  }
+
+  /* Calm Colors mode — soft background replaces pure dark */
+  body.calm-colors {
+    --a11y-bg: #1a1f2e;
+    --a11y-text: #d4d8e8;
+  }
+
+  /* Dyslexia-friendly fonts */
+  body.font-atkinson {
+    font-family: 'Atkinson Hyperlegible', var(--font-sans);
+  }
+  body.font-opendyslexic {
+    font-family: 'OpenDyslexic', var(--font-sans);
+  }
+
+  #root {
+    @apply min-h-svh;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold tracking-tight text-white;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+}
+
+
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');

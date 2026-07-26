@@ -21,6 +21,7 @@ export type IconName =
   | 'chevron-down'
   | 'star'
   | 'cart'
+  | 'info'
 
 const PATHS: Record<IconName, React.ReactNode> = {
   palette: (
@@ -117,6 +118,12 @@ const PATHS: Record<IconName, React.ReactNode> = {
       <circle cx="9" cy="21" r="1" />
       <circle cx="19" cy="21" r="1" />
       <path d="M2 3h2l2.6 13.4a1 1 0 0 0 1 .8h9.7a1 1 0 0 0 1-.8L21 7H5" />
+    </>
+  ),
+  info: (
+    <>
+      <circle cx="12" cy="12" r="10" />
+      <path d="M12 16v-4M12 8h.01" />
     </>
   ),
 }

@@ -41,6 +41,50 @@ export function PalettePage() {
       </PageHeader>
 
       <div className="flex flex-col gap-6 px-6 py-6 md:px-8">
+        {/* Legend: what the AA / AAA / Bajo badges mean */}
+        <Card>
+          <div className="mb-3 flex items-center gap-2">
+            <Icon name="info" size={16} className="text-brand-purple-light" />
+            <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-300">
+              ¿Qué significan las insignias?
+            </h3>
+          </div>
+          <p className="mb-4 text-sm leading-relaxed text-slate-400">
+            Cada color muestra una insignia según el nivel de contraste WCAG que
+            alcanza con texto legible encima. A mayor contraste, más fácil de
+            leer para todas las personas.
+          </p>
+          <ul className="grid gap-3 sm:grid-cols-3">
+            <li className="flex items-start gap-3 rounded-xl border border-white/10 bg-surface-800 p-3">
+              <span className="shrink-0 rounded-md bg-emerald-500/15 px-2 py-0.5 text-xs font-semibold text-emerald-300">
+                AAA
+              </span>
+              <span className="text-xs leading-relaxed text-slate-400">
+                Contraste óptimo (≥ 7:1). Cumple el nivel más exigente de la WCAG
+                para texto normal.
+              </span>
+            </li>
+            <li className="flex items-start gap-3 rounded-xl border border-white/10 bg-surface-800 p-3">
+              <span className="shrink-0 rounded-md bg-emerald-500/15 px-2 py-0.5 text-xs font-semibold text-emerald-300">
+                AA
+              </span>
+              <span className="text-xs leading-relaxed text-slate-400">
+                Contraste suficiente (≥ 4.5:1). Es el mínimo recomendado para
+                texto normal accesible.
+              </span>
+            </li>
+            <li className="flex items-start gap-3 rounded-xl border border-white/10 bg-surface-800 p-3">
+              <span className="shrink-0 rounded-md bg-red-500/15 px-2 py-0.5 text-xs font-semibold text-red-300">
+                Bajo
+              </span>
+              <span className="text-xs leading-relaxed text-slate-400">
+                Contraste insuficiente (&lt; 4.5:1). Puede dificultar la lectura;
+                conviene ajustar el color.
+              </span>
+            </li>
+          </ul>
+        </Card>
+
         {/* Palette grid */}
         <Card>
           <div className="mb-4 flex items-center justify-between">

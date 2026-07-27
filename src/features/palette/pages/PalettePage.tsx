@@ -51,29 +51,40 @@ export function PalettePage() {
               ¿Qué significan las insignias?
             </h3>
           </div>
-          <div className="flex flex-wrap gap-4 text-xs text-slate-400">
-            <span className="flex items-center gap-1.5">
-              <span
-                className="h-2.5 w-2.5 rounded-full"
-                style={{ backgroundColor: accent }}
-              />
-              <strong>AAA:</strong> Contraste ≥ 7.0
-            </span>
-            <span className="flex items-center gap-1.5">
-              <span
-                className="h-2.5 w-2.5 rounded-full"
-                style={{ backgroundColor: accent }}
-              />
-              <strong>AA:</strong> Contraste ≥ 4.5
-            </span>
-            <span className="flex items-center gap-1.5">
-              <span
-                className="h-2.5 w-2.5 rounded-full"
-                style={{ backgroundColor: failColor }}
-              />
-              <strong>Bajo:</strong> Falla WCAG
-            </span>
-          </div>
+          <p className="mb-4 text-sm leading-relaxed text-slate-400">
+            Cada color muestra una insignia según el nivel de contraste WCAG que
+            alcanza con texto legible encima. A mayor contraste, más fácil de
+            leer para todas las personas.
+          </p>
+          <ul className="grid gap-3 sm:grid-cols-3">
+            <li className="flex items-start gap-3 rounded-xl border border-white/10 bg-surface-800 p-3">
+              <span className="shrink-0 rounded-md px-2 py-0.5 text-xs font-semibold" style={{ color: accent, backgroundColor: `${accent}26` }}>
+                AAA
+              </span>
+              <span className="text-xs leading-relaxed text-slate-400">
+                Contraste óptimo (≥ 7:1). Cumple el nivel más exigente de la WCAG
+                para texto normal.
+              </span>
+            </li>
+            <li className="flex items-start gap-3 rounded-xl border border-white/10 bg-surface-800 p-3">
+              <span className="shrink-0 rounded-md px-2 py-0.5 text-xs font-semibold" style={{ color: accent, backgroundColor: `${accent}26` }}>
+                AA
+              </span>
+              <span className="text-xs leading-relaxed text-slate-400">
+                Contraste suficiente (≥ 4.5:1). Es el mínimo recomendado para
+                texto normal accesible.
+              </span>
+            </li>
+            <li className="flex items-start gap-3 rounded-xl border border-white/10 bg-surface-800 p-3">
+              <span className="shrink-0 rounded-md px-2 py-0.5 text-xs font-semibold" style={{ color: failColor, backgroundColor: `${failColor}26` }}>
+                Bajo
+              </span>
+              <span className="text-xs leading-relaxed text-slate-400">
+                Contraste insuficiente (&lt; 4.5:1). Puede dificultar la lectura;
+                conviene ajustar el color.
+              </span>
+            </li>
+          </ul>
         </Card>
 
         {/* Palette grid */}

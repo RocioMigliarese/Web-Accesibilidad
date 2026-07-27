@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -17,7 +18,7 @@
   --color-surface-50: #ffffff;
 
   /* Typography */
-  --font-sans: 'Atkinson Hyperlegible', 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
+  --font-sans: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
   --font-mono: ui-monospace, Consolas, monospace;
 
   /* Border radius */
@@ -33,10 +34,16 @@
     text-rendering: optimizeLegibility;
 
     /* Accessibility — overridden dynamically by useGlobalAccessibility hook */
+    --a11y-font-size: 19px;
     --a11y-line-height: 1.5;
     --a11y-letter-spacing: 0px;
     --a11y-bg: #0f1117;
     --a11y-text: #e2e8f0;
+  }
+
+  html {
+    font-size: var(--a11y-font-size);
+    transition: font-size 0.3s ease;
   }
 
   body {
@@ -46,8 +53,11 @@
     letter-spacing: var(--a11y-letter-spacing);
     color: var(--a11y-text);
     background-color: var(--a11y-bg);
-    transition: background-color 0.3s ease, color 0.3s ease,
-      line-height 0.2s ease, letter-spacing 0.2s ease;
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease,
+      line-height 0.2s ease,
+      letter-spacing 0.2s ease;
   }
 
   /* Calm Colors mode — soft background replaces pure dark */
@@ -56,12 +66,41 @@
     --a11y-text: #d4d8e8;
   }
 
-  /* Dyslexia-friendly fonts */
+  /* ── Color blindness modes — brand accent adapts to each type ── */
+
+  /* Deuteranopia: sky blue — blue channel intact, most common (~6% men) */
+  body.cm-deuteranopia {
+    --color-brand-purple: #38bdf8;
+    --color-brand-purple-light: #7dd3fc;
+  }
+
+  /* Protanopia: cyan — blue channel intact, higher luminance (~2% men) */
+  body.cm-protanopia {
+    --color-brand-purple: #22d3ee;
+    --color-brand-purple-light: #67e8f9;
+  }
+
+  /* Tritanopia: orange — red/yellow channel intact (~0.003%) */
+  body.cm-tritanopia {
+    --color-brand-purple: #fb923c;
+    --color-brand-purple-light: #fdba74;
+  }
+
+  /* Achromatopsia: amber — maximum luminance contrast on dark bg (~0.003%) */
+  body.cm-achromatopsia {
+    --color-brand-purple: #fbbf24;
+    --color-brand-purple-light: #fde68a;
+  }
+
+
+  /* Dyslexia-friendly fonts — override the Tailwind CSS variable globally */
   body.font-atkinson {
-    font-family: 'Atkinson Hyperlegible', var(--font-sans);
+    --font-sans: 'Atkinson Hyperlegible', 'Inter', system-ui, sans-serif;
+    font-family: var(--font-sans) !important;
   }
   body.font-opendyslexic {
-    font-family: 'OpenDyslexic', var(--font-sans);
+    --font-sans: 'OpenDyslexic', 'Inter', system-ui, sans-serif;
+    font-family: var(--font-sans) !important;
   }
 
   #root {
@@ -74,6 +113,9 @@
 
   * {
     box-sizing: border-box;
+    /* Force line-height and letter-spacing globally to override Tailwind utilities */
+    line-height: var(--a11y-line-height) !important;
+    letter-spacing: var(--a11y-letter-spacing) !important;
   }
 }
 
@@ -104,9 +146,6 @@
   outline: 2px solid var(--color-brand-purple-light);
   outline-offset: 3px;
 }
-
-/* Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 /* OpenDyslexic (self-hostable webfont via CDN) */
 @font-face {

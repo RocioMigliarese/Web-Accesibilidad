@@ -16,7 +16,7 @@ export const SIMULATION_META: Record<
   { label: string; description: string; prevalence: string }
 > = {
   none: {
-    label: 'Visión normal',
+    label: 'Visión Estándar',
     description: 'Sin ninguna deficiencia cromática aplicada.',
     prevalence: 'Referencia',
   },

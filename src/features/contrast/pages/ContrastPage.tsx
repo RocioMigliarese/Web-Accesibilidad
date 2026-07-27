@@ -1,36 +1,47 @@
 import { useContrastStore } from '../store/useContrastStore'
 import { getContrastRatio, formatRatio } from '../utils/wcag'
 import { usePaletteStore } from '../../../shared/store/usePaletteStore'
+import { useColorModeAccent } from '../../../shared/hooks/useColorModeAccent'
 import { PageHeader, Card, Button, ColorField, Toggle } from '../../../shared/components/ui'
 import { Icon } from '../../../shared/components/ui/Icon'
 
-/* A single pass/fail compliance chip. */
+/* A single pass/fail compliance chip — colors adapt to the active color mode. */
 function ComplianceBadge({
   label,
   threshold,
   ratio,
+  accent,
+  accentBg,
+  failColor,
+  failBg,
 }: {
   label: string
   threshold: number
   ratio: number
+  accent: string
+  accentBg: string
+  failColor: string
+  failBg: string
 }) {
   const pass = ratio >= threshold
   return (
     <div
-      className={`flex items-center justify-between gap-2 rounded-xl border px-4 py-3 ${
-        pass
-          ? 'border-emerald-500/30 bg-emerald-500/10'
-          : 'border-red-500/30 bg-red-500/10'
-      }`}
+      className="flex items-center justify-between gap-2 rounded-xl border px-4 py-3 transition-colors duration-300"
+      style={{
+        borderColor: pass ? `${accent}40` : `${failColor}40`,
+        backgroundColor: pass ? accentBg : failBg,
+      }}
     >
       <div className="flex flex-col">
         <span className="text-sm font-semibold text-white">{label}</span>
         <span className="text-xs text-slate-400">Mín. {threshold}:1</span>
       </div>
       <span
-        className={`flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-bold ${
-          pass ? 'bg-emerald-500/20 text-emerald-300' : 'bg-red-500/20 text-red-300'
-        }`}
+        className="flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-bold transition-colors duration-300"
+        style={{
+          color: pass ? accent : failColor,
+          backgroundColor: pass ? `${accent}20` : `${failColor}20`,
+        }}
       >
         <Icon name={pass ? 'check' : 'x'} size={14} />
         {pass ? 'Cumple' : 'Falla'}
@@ -53,8 +64,14 @@ export function ContrastPage() {
     clearHistory,
   } = useContrastStore()
   const paletteColors = usePaletteStore((s) => s.colors)
+  const { accent, accentLight, accentBg, failColor, failBg } = useColorModeAccent()
 
   const ratio = getContrastRatio(foreground, background)
+
+  // Determine overall WCAG level for the large ratio badge
+  const levelLabel = ratio >= 7 ? 'AAA' : ratio >= 4.5 ? 'AA' : '✕'
+  const levelDesc  = ratio >= 7 ? 'Excelente' : ratio >= 4.5 ? 'Bueno' : 'Insuficiente'
+  const levelPass  = ratio >= 4.5
 
   return (
     <div className="flex flex-col">
@@ -150,12 +167,13 @@ export function ContrastPage() {
                         {formatRatio(h.ratio)}
                       </span>
                     </div>
+                    {/* History level badge — adapts to color mode */}
                     <span
-                      className={`rounded-md px-2 py-0.5 text-xs font-semibold ${
-                        h.level === 'Fail'
-                          ? 'bg-red-500/15 text-red-300'
-                          : 'bg-emerald-500/15 text-emerald-300'
-                      }`}
+                      className="rounded-md px-2 py-0.5 text-xs font-semibold transition-colors duration-300"
+                      style={{
+                        color: h.level === 'Fail' ? failColor : accent,
+                        backgroundColor: h.level === 'Fail' ? failBg : accentBg,
+                      }}
                     >
                       {h.level}
                     </span>
@@ -198,31 +216,39 @@ export function ContrastPage() {
                   {formatRatio(ratio)}
                 </p>
               </div>
+              {/* Large level badge — color mode aware */}
               <div
-                className={`rounded-2xl px-4 py-3 text-center ${
-                  ratio >= 7
-                    ? 'bg-emerald-500/15 text-emerald-300'
-                    : ratio >= 4.5
-                      ? 'bg-amber-500/15 text-amber-300'
-                      : 'bg-red-500/15 text-red-300'
-                }`}
+                className="rounded-2xl px-4 py-3 text-center transition-colors duration-300"
+                style={{
+                  backgroundColor: levelPass ? accentBg : failBg,
+                  color: levelPass ? accentLight : failColor,
+                }}
               >
-                <p className="text-2xl font-bold">
-                  {ratio >= 7 ? 'AAA' : ratio >= 4.5 ? 'AA' : '✕'}
-                </p>
-                <p className="text-xs">
-                  {ratio >= 7 ? 'Excelente' : ratio >= 4.5 ? 'Bueno' : 'Insuficiente'}
-                </p>
+                <p className="text-2xl font-bold">{levelLabel}</p>
+                <p className="text-xs">{levelDesc}</p>
               </div>
             </div>
 
             <div className="mt-5 grid gap-3 sm:grid-cols-2">
-              <ComplianceBadge label="Texto normal AA" threshold={4.5} ratio={ratio} />
-              <ComplianceBadge label="Texto normal AAA" threshold={7} ratio={ratio} />
-              <ComplianceBadge label="Texto grande AA" threshold={3} ratio={ratio} />
-              <ComplianceBadge label="Texto grande AAA" threshold={4.5} ratio={ratio} />
-              <ComplianceBadge label="Componentes UI" threshold={3} ratio={ratio} />
-              <ComplianceBadge label="Objetos gráficos" threshold={3} ratio={ratio} />
+              {[
+                { label: 'Texto normal AA',   threshold: 4.5 },
+                { label: 'Texto normal AAA',  threshold: 7   },
+                { label: 'Texto grande AA',   threshold: 3   },
+                { label: 'Texto grande AAA',  threshold: 4.5 },
+                { label: 'Componentes UI',    threshold: 3   },
+                { label: 'Objetos gráficos',  threshold: 3   },
+              ].map((item) => (
+                <ComplianceBadge
+                  key={item.label}
+                  label={item.label}
+                  threshold={item.threshold}
+                  ratio={ratio}
+                  accent={accent}
+                  accentBg={accentBg}
+                  failColor={failColor}
+                  failBg={failBg}
+                />
+              ))}
             </div>
           </Card>
         </div>

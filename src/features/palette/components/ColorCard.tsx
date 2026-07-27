@@ -2,6 +2,7 @@ import { useRef, useState } from 'react'
 import { Icon } from '../../../shared/components/ui/Icon'
 import { getReadableTextColor } from '../../../shared/utils/colorUtils'
 import { getContrastRatio, getWCAGLevel } from '../../contrast/utils/wcag'
+import { useColorModeAccent } from '../../../shared/hooks/useColorModeAccent'
 import type { PaletteColor } from '../../../shared/store/usePaletteStore'
 
 export function ColorCard({
@@ -19,9 +20,11 @@ export function ColorCard({
   const [copied, setCopied] = useState(false)
   const textColor = getReadableTextColor(color.hex)
 
-  // Contrast of a readable label against this swatch — the higher, the better
   const ratio = getContrastRatio(textColor, color.hex)
   const level = getWCAGLevel(ratio)
+
+  const { accent, accentBg, failColor, failBg } = useColorModeAccent()
+  const isPass = level !== 'Fail'
 
   const copyHex = async () => {
     await navigator.clipboard?.writeText(color.hex.toUpperCase())
@@ -90,11 +93,11 @@ export function ColorCard({
           {color.name ?? 'Sin nombre'}
         </span>
         <span
-          className={`shrink-0 rounded-md px-2 py-0.5 text-xs font-semibold ${
-            level === 'Fail'
-              ? 'bg-red-500/15 text-red-300'
-              : 'bg-emerald-500/15 text-emerald-300'
-          }`}
+          className="shrink-0 rounded-md px-2 py-0.5 text-xs font-semibold transition-colors duration-300"
+          style={{
+            color: isPass ? accent : failColor,
+            backgroundColor: isPass ? accentBg : failBg,
+          }}
           title={`Contraste del texto sobre el color: ${ratio.toFixed(1)}:1`}
         >
           {level === 'Fail' ? 'Bajo' : level}

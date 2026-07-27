@@ -3,10 +3,12 @@ import { randomHex } from '../../../shared/utils/colorUtils'
 import { PageHeader, Card, Button } from '../../../shared/components/ui'
 import { Icon } from '../../../shared/components/ui/Icon'
 import { ColorCard } from '../components/ColorCard'
+import { useColorModeAccent } from '../../../shared/hooks/useColorModeAccent'
 
 export function PalettePage() {
   const { colors, addColor, removeColor, updateColor, resetPalette } =
     usePaletteStore()
+  const { accent, failColor } = useColorModeAccent()
 
   const handleRandomPalette = () => {
     resetPalette()
@@ -56,7 +58,7 @@ export function PalettePage() {
           </p>
           <ul className="grid gap-3 sm:grid-cols-3">
             <li className="flex items-start gap-3 rounded-xl border border-white/10 bg-surface-800 p-3">
-              <span className="shrink-0 rounded-md bg-emerald-500/15 px-2 py-0.5 text-xs font-semibold text-emerald-300">
+              <span className="shrink-0 rounded-md px-2 py-0.5 text-xs font-semibold" style={{ color: accent, backgroundColor: `${accent}26` }}>
                 AAA
               </span>
               <span className="text-xs leading-relaxed text-slate-400">
@@ -65,7 +67,7 @@ export function PalettePage() {
               </span>
             </li>
             <li className="flex items-start gap-3 rounded-xl border border-white/10 bg-surface-800 p-3">
-              <span className="shrink-0 rounded-md bg-emerald-500/15 px-2 py-0.5 text-xs font-semibold text-emerald-300">
+              <span className="shrink-0 rounded-md px-2 py-0.5 text-xs font-semibold" style={{ color: accent, backgroundColor: `${accent}26` }}>
                 AA
               </span>
               <span className="text-xs leading-relaxed text-slate-400">
@@ -74,7 +76,7 @@ export function PalettePage() {
               </span>
             </li>
             <li className="flex items-start gap-3 rounded-xl border border-white/10 bg-surface-800 p-3">
-              <span className="shrink-0 rounded-md bg-red-500/15 px-2 py-0.5 text-xs font-semibold text-red-300">
+              <span className="shrink-0 rounded-md px-2 py-0.5 text-xs font-semibold" style={{ color: failColor, backgroundColor: `${failColor}26` }}>
                 Bajo
               </span>
               <span className="text-xs leading-relaxed text-slate-400">

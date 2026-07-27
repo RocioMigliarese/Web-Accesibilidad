@@ -1,5 +1,7 @@
 import { NavLink } from 'react-router-dom'
 import { Icon } from '../ui/Icon'
+import { ColorModeToggle } from '../ui/ThemeToggle'
+import { A11yDropdown } from '../ui/A11yDropdown'
 import type { IconName } from '../ui/Icon'
 
 const NAV_ITEMS: {
@@ -24,11 +26,11 @@ export function Navbar() {
             <Icon name="palette" size={20} />
           </span>
           <h1 className="text-base font-bold leading-none text-white">
-            <span className="text-brand-purple-light">Color</span>Ability
+            <span className="text-brand-purple-light">Tone</span>Safe
           </h1>
         </div>
 
-        {/* Nav */}
+        {/* Nav links */}
         <nav
           className="flex flex-1 items-center gap-1 overflow-x-auto"
           aria-label="Navegación principal"
@@ -63,9 +65,11 @@ export function Navbar() {
           ))}
         </nav>
 
-        <span className="hidden shrink-0 text-xs text-slate-600 md:inline">
-          v1.0.0
-        </span>
+        {/* ── Quick controls ── */}
+        <div className="flex shrink-0 items-center gap-2 border-l border-white/10 pl-4">
+          <ColorModeToggle />
+          <A11yDropdown />
+        </div>
       </div>
     </header>
   )
